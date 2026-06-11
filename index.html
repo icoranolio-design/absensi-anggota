@@ -1,1 +1,132 @@
 
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ABSENSI DIGITAL</title>
+
+<style>
+
+body{
+background:#07111f;
+font-family:sans-serif;
+display:flex;
+justify-content:center;
+align-items:center;
+height:100vh;
+margin:0;
+color:white;
+}
+
+.card{
+width:350px;
+background:#0f172a;
+padding:25px;
+border-radius:20px;
+box-shadow:0 0 25px #0099ff55;
+}
+
+h1{
+text-align:center;
+color:#4db8ff;
+}
+
+p{
+text-align:center;
+color:#9ca3af;
+}
+
+input{
+width:100%;
+padding:12px;
+margin-top:10px;
+border:none;
+border-radius:12px;
+background:#1e293b;
+color:white;
+}
+
+button{
+width:100%;
+padding:14px;
+margin-top:20px;
+border:none;
+border-radius:12px;
+background:linear-gradient(90deg,#2196f3,#3b82f6);
+color:white;
+font-size:18px;
+font-weight:bold;
+cursor:pointer;
+}
+
+button:hover{
+opacity:0.9;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="card">
+
+<h1>ABSENSI DIGITAL</h1>
+<p>Kepolisian Republik Indonesia</p>
+
+<input type="text" id="nama" placeholder="Nama Anggota">
+
+<input type="text" id="pangkat" placeholder="Pangkat">
+
+<input type="text" id="jabatan" placeholder="Jabatan">
+
+<button onclick="absen()">MASUK</button>
+
+</div>
+
+<script>
+
+async function absen(){
+
+const nama = document.getElementById("nama").value;
+const pangkat = document.getElementById("pangkat").value;
+const jabatan = document.getElementById("jabatan").value;
+
+const webhook = "https://discord.com/api/webhooks/1514474696106705026/hLfoi_p9Iz5HhFpJWXyiLorKa-S-cx5HUTaTZTpIaKlKtlyRxqn4MGEcdumFuqvQnV2p";
+
+const data = {
+embeds:[{
+title:"📌 LAPORAN PRESENSI DIGITAL",
+color:3447003,
+
+description:
+`👤 Nama Anggota
+${nama}
+
+🎖 Pangkat
+${pangkat}
+
+💼 Jabatan
+${jabatan}
+
+📍 Status Kehadiran
+HADIR`
+}]
+};
+
+fetch(webhook,{
+method:"POST",
+headers:{
+"Content-Type":"application/json"
+},
+body:JSON.stringify(data)
+});
+
+alert("Absensi berhasil!");
+
+}
+
+</script>
+
+</body>
+</html>
