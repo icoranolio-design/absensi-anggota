@@ -4,87 +4,138 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>ABSENSI ROBLOX</title>
+<title>KRIRP ABSENSI</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 
 <style>
 
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+}
+
 body{
-background:#1a1208;
-font-family:sans-serif;
+height:100vh;
 display:flex;
 justify-content:center;
 align-items:center;
-height:100vh;
-margin:0;
-color:white;
+background:
+linear-gradient(rgba(0,0,0,0.7),rgba(0,0,0,0.8)),
+url('https://images.unsplash.com/photo-1511512578047-dfb367046420?q=80&w=2070&auto=format&fit=crop');
+background-size:cover;
+background-position:center;
+overflow:hidden;
+}
+
+.glow{
+position:absolute;
+width:500px;
+height:500px;
+background:#ff7b00;
+filter:blur(180px);
+opacity:0.2;
+border-radius:50%;
+z-index:0;
 }
 
 .card{
-width:350px;
-background:#2a1b0d;
-padding:25px;
-border-radius:20px;
-box-shadow:0 0 25px #ff880055;
+position:relative;
+z-index:1;
+width:380px;
+padding:30px;
+border-radius:25px;
+background:rgba(20,20,20,0.7);
+backdrop-filter:blur(15px);
+border:1px solid rgba(255,255,255,0.1);
+box-shadow:0 0 30px rgba(255,136,0,0.3);
+}
+
+.avatar{
+width:110px;
+height:110px;
+border-radius:50%;
+display:block;
+margin:0 auto 15px auto;
+border:4px solid #ff9d00;
+object-fit:cover;
+background:#1f1f1f;
+box-shadow:0 0 25px #ff880088;
+transition:0.3s;
+}
+
+.avatar:hover{
+transform:scale(1.05);
 }
 
 h1{
 text-align:center;
-color:#ff9d00;
-margin-bottom:5px;
-}
-
-p{
-text-align:center;
-color:#d6b38a;
-margin-bottom:20px;
-}
-
-input{
-width:100%;
-padding:12px;
 margin-top:10px;
+font-size:28px;
+color:#ffae42;
+}
+
+.subtitle{
+text-align:center;
+color:#d1d5db;
+font-size:14px;
+margin-bottom:25px;
+}
+
+.input-box{
+margin-top:15px;
+}
+
+.input-box input{
+width:100%;
+padding:14px;
 border:none;
-border-radius:12px;
-background:#3a2612;
+outline:none;
+border-radius:14px;
+background:rgba(255,255,255,0.08);
 color:white;
 font-size:15px;
-box-sizing:border-box;
+transition:0.3s;
+}
+
+.input-box input:focus{
+background:rgba(255,255,255,0.12);
+box-shadow:0 0 10px #ff950055;
 }
 
 button{
 width:100%;
-padding:14px;
-margin-top:20px;
+padding:15px;
+margin-top:25px;
 border:none;
-border-radius:12px;
-background:linear-gradient(90deg,#ff8800,#ffae00);
+border-radius:15px;
+background:linear-gradient(90deg,#ff7b00,#ffae00);
 color:white;
-font-size:18px;
-font-weight:bold;
+font-size:17px;
+font-weight:700;
 cursor:pointer;
-transition:0.2s;
+transition:0.3s;
 }
 
 button:hover{
-opacity:0.9;
-transform:scale(1.02);
+transform:translateY(-2px);
+box-shadow:0 0 20px #ff950088;
 }
 
 .status{
-margin-top:15px;
+margin-top:18px;
 text-align:center;
 font-size:14px;
 color:#ffcc80;
 }
 
-.avatar{
-width:100px;
-height:100px;
-border-radius:50%;
-display:block;
-margin:0 auto 15px auto;
-border:3px solid #ff9d00;
-object-fit:cover;
+.footer{
+margin-top:20px;
+text-align:center;
+font-size:12px;
+color:#9ca3af;
 }
 
 </style>
@@ -92,27 +143,47 @@ object-fit:cover;
 
 <body>
 
+<div class="glow"></div>
+
 <div class="card">
 
-<img id="avatar" class="avatar"
-src="https://tr.rbxcdn.com/180DAY-avatar-headshot.png"
->
+<img id="avatar"
+class="avatar"
+src="https://cdn-icons-png.flaticon.com/512/149/149071.png">
 
-<h1>ABSENSI DIGITAL</h1>
-<p>Kepolisian Republik Indonesia</p>
+<h1>KRIRP ABSENSI</h1>
 
-<input type="text" id="roblox"
+<div class="subtitle">
+Kepolisian Republik Indonesia
+</div>
+
+<div class="input-box">
+<input type="text"
+id="roblox"
 placeholder="Username Roblox">
+</div>
 
-<input type="text" id="pangkat"
+<div class="input-box">
+<input type="text"
+id="pangkat"
 placeholder="Pangkat">
+</div>
 
-<input type="text" id="jabatan"
+<div class="input-box">
+<input type="text"
+id="jabatan"
 placeholder="Jabatan">
+</div>
 
-<button onclick="absen()">MASUK</button>
+<button onclick="absen()">
+MASUK
+</button>
 
 <div class="status" id="status"></div>
+
+<div class="footer">
+KRIRP Attendance System
+</div>
 
 </div>
 
@@ -162,17 +233,35 @@ return data.data[0];
 
 async function getAvatar(userId){
 
+try{
+
 const response = await fetch(
 `https://thumbnails.roblox.com/v1/users/avatar-headshot?userIds=${userId}&size=420x420&format=Png&isCircular=false`
 );
 
 const data = await response.json();
 
+if(data.data && data.data.length > 0){
+
 return data.data[0].imageUrl;
+
+}else{
+
+return "https://cdn-icons-png.flaticon.com/512/149/149071.png";
+
+}
+
+}catch{
+
+return "https://cdn-icons-png.flaticon.com/512/149/149071.png";
+
+}
 
 }
 
 async function absen(){
+
+try{
 
 const username =
 document.getElementById("roblox").value;
@@ -183,14 +272,17 @@ document.getElementById("pangkat").value;
 const jabatan =
 document.getElementById("jabatan").value;
 
-if(!username){
+if(!username || !pangkat || !jabatan){
 
 document.getElementById("status").innerHTML =
-"⚠️ Masukkan username Roblox!";
+"⚠️ Lengkapi semua data!";
 
 return;
 
 }
+
+document.getElementById("status").innerHTML =
+"⏳ Sedang memproses...";
 
 const userData = await getRobloxData(username);
 
@@ -219,16 +311,20 @@ return;
 
 }
 
-const avatarUrl = await getAvatar(userId);
+const avatarUrl =
+await getAvatar(userId);
 
-document.getElementById("avatar").src = avatarUrl;
+document.getElementById("avatar").src =
+avatarUrl;
 
-const jam = new Date().toLocaleTimeString('id-ID');
+const jam =
+new Date().toLocaleTimeString('id-ID');
 
 const data = {
 embeds:[{
-title:"📌 LAPORAN PRESENSI DIGITAL",
+title:"📌 KRIRP PRESENSI DIGITAL",
 color:16753920,
+
 thumbnail:{
 url:avatarUrl
 },
@@ -254,13 +350,15 @@ description:
 }]
 };
 
-fetch(webhook,{
+const response = await fetch(webhook,{
 method:"POST",
 headers:{
 "Content-Type":"application/json"
 },
 body:JSON.stringify(data)
 });
+
+if(response.ok){
 
 localStorage.setItem(
 `absen_${userId}`,
@@ -269,6 +367,22 @@ tanggalHariIni
 
 document.getElementById("status").innerHTML =
 "✅ Absensi berhasil dikirim!";
+
+}else{
+
+document.getElementById("status").innerHTML =
+"❌ Gagal mengirim webhook!";
+
+}
+
+}catch(error){
+
+console.log(error);
+
+document.getElementById("status").innerHTML =
+"❌ Terjadi error!";
+
+}
 
 }
 
