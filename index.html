@@ -1,9 +1,9 @@
-
 <!DOCTYPE html>
 <html lang="id">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>ABSENSI DIGITAL</title>
 
 <style>
@@ -58,6 +58,7 @@ color:white;
 font-size:18px;
 font-weight:bold;
 cursor:pointer;
+cursor:pointer;
 }
 
 button:hover{
@@ -92,6 +93,14 @@ const nama = document.getElementById("nama").value;
 const pangkat = document.getElementById("pangkat").value;
 const jabatan = document.getElementById("jabatan").value;
 
+if(localStorage.getItem("sudahAbsen")){
+
+alert("Anda sudah absen!");
+
+return;
+
+}
+
 const webhook = "https://discord.com/api/webhooks/1514474696106705026/hLfoi_p9Iz5HhFpJWXyiLorKa-S-cx5HUTaTZTpIaKlKtlyRxqn4MGEcdumFuqvQnV2p";
 
 const data = {
@@ -110,7 +119,7 @@ ${pangkat}
 ${jabatan}
 
 📍 Status Kehadiran
-HADIR`
+**HADIR**`
 }]
 };
 
@@ -121,6 +130,8 @@ headers:{
 },
 body:JSON.stringify(data)
 });
+
+localStorage.setItem("sudahAbsen","true");
 
 alert("Absensi berhasil!");
 
